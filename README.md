@@ -1,17 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gastos App! 📊
 
-## Getting Started
+Una aplicación web moderna para gestionar y visualizar finanzas personales o de empresa. Construida con Next.js (App Router), Tailwind CSS y Recharts.
 
-First, run the development server:
+## ✨ Características Principales
+
+- **Carga de Archivos Drag & Drop**: Sube fácilmente tus transacciones en formato `.xlsx`, `.xls` o `.csv`.
+- **Resumen Financiero**: Visualiza automáticamente tus ingresos totales, gastos y balance neto mediante tarjetas interactivas.
+- **Gráficos Dinámicos**:
+  - Gráfico de barras comparando ingresos y gastos organizados por mes.
+  - Gráfico de torta mostrando la distribución detallada de gastos por categoría.
+- **Diseño Responsivo**: Interfaz tipo SaaS limpia y moderna que se adapta a cualquier tamaño de pantalla.
+
+## 🚀 Comenzando
+
+### Requisitos Previos
+
+Asegúrate de tener instalado Node.js (versión 18 o superior) en tu sistema.
+
+### Instalación
+
+1. Clona el repositorio o abre la carpeta del proyecto en tu terminal.
+2. Instala las dependencias necesarias:
+
+```bash
+npm install
+```
+
+### Ejecutar el Servidor de Desarrollo
+
+Inicia la aplicación en modo desarrollo ejecutando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
