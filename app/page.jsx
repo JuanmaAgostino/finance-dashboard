@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import FileUploader from './FileUploader';
 import { processTransactions, getMonthlyData, getCategoryData, getTransactionMonth } from './dataProcessor';

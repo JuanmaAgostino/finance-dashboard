@@ -1,3 +1,5 @@
+"use client";
+
 import { X, Plus, Trash2, DollarSign, Percent, ImageIcon, Wand2 } from 'lucide-react';
 import { useMemo } from 'react';
 

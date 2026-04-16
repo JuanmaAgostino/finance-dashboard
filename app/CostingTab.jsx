@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import { Plus, Trash2, Pencil, DollarSign, BarChart2, Percent, FileText, LoaderCircle, ShoppingCart } from 'lucide-react';
 import { toPng } from 'html-to-image';
