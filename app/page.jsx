@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import FileUploader from './FileUploader';
 import { processTransactions, getMonthlyData, getCategoryData, getTransactionMonth } from './dataProcessor';
-import { Wallet, Plus, Download, Trash2, FileText, Sun, Moon, LayoutDashboard, List, PiggyBank, Pencil, Calculator, Eye, EyeOff } from 'lucide-react';
+import { Wallet, Plus, Download, Trash2, FileText, Sun, Moon, LayoutDashboard, List, PiggyBank, Pencil, Calculator, Eye, EyeOff, Smartphone } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
 import TransactionModal from './TransactionModal';
@@ -44,6 +44,8 @@ export default function DashboardPage() {
   const [isPrivacyMode, setIsPrivacyMode] = useState(false);
   const [currency, setCurrency] = useState('$');
   const [dialogConfig, setDialogConfig] = useState({ isOpen: false, type: 'alert', title: '', message: '', inputValue: '', onConfirm: null, onCancel: null });
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallable, setIsInstallable] = useState(false);
 
   const showDialog = useCallback((type, title, message, defaultValue = '') => {
     return new Promise((resolve) => {
@@ -123,6 +125,13 @@ export default function DashboardPage() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(err => console.error('Error al registrar SW:', err));
     }
+
+    // Capturar el evento de instalación de la PWA
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); // Evita que Chrome muestre el mini-cartel automático abajo
+      setDeferredPrompt(e); // Guarda el evento para usarlo en nuestro propio botón
+      setIsInstallable(true);
+    });
   }, []);
 
   // Guardar datos automáticamente cada vez que cambian
@@ -507,6 +516,16 @@ export default function DashboardPage() {
     }
   };
 
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstallable(false);
+    }
+    setDeferredPrompt(null);
+  };
+
   const getTabClass = (tabName, currentTab) => {
     const base = "px-4 py-2.5 text-sm font-bold rounded-xl flex items-center gap-2 transition-all whitespace-nowrap ";
     const active = "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm";
@@ -565,6 +584,11 @@ export default function DashboardPage() {
             <p className="text-slate-500 dark:text-slate-400 mt-1">Análisis detallado de ingresos y gastos</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
+            {isInstallable && (
+              <button onClick={handleInstallApp} className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl shadow-sm font-medium flex items-center gap-2 hover:opacity-90 transition-opacity animate-pulse">
+                <Smartphone className="w-4 h-4" /> Instalar App
+              </button>
+            )}
             <button onClick={() => setIsPrivacyMode(!isPrivacyMode)} className="p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm" title={isPrivacyMode ? "Mostrar montos" : "Ocultar montos (Modo Privacidad)"}>
               {isPrivacyMode ? <EyeOff className="w-4 h-4 text-indigo-500" /> : <Eye className="w-4 h-4" />}
             </button>
