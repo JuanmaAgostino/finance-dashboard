@@ -3,6 +3,7 @@ import "./globals.css";
 export const metadata = {
   title: "Gastos App",
   description: "App Gastos por Juan Manuel Agostino Colombres",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }) {
